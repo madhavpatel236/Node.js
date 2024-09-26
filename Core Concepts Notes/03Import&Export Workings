@@ -1,9 +1,8 @@
 ## Types of module pattern
 
 - There are 2 types of modul pattern we follows: `CommonJS modules (CJS), ES modules (ESM)`
-    - ES modules typically use the .mjs extension.
 
-- `(i) CommonJS Modules(CJS)` 
+- `(i) CommonJS Modules(CJS)`
     - export: module.exports ={ } // module.export = { data } 
     - import: require("./path) // const { data } = require("./path)
     - by default use Node.js
@@ -11,13 +10,14 @@
     - Syncronization
     - Not Strict 
 
-- `(ii) ES modules(ESM)` 
+- `(ii) ES modules(ESM) `
     - export: export  // export function data(){}
     - import: import // import data from "./path"
     - by default use react.js or othere frameworks
     - newer way
     - Async
     - Strict
+    - ES modules typically use the .mjs extension.
 
 ` Synchronous vs. Asynchronous: ` CommonJS requires modules in a
 synchronous manner, meaning the next line of code will execute only after the
