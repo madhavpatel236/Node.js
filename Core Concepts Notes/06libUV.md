@@ -66,6 +66,8 @@
         - When the `event loop is empty` and there are no more tasks to execute, it `enters the poll phase` and essentially waits for incoming events.
         - `NOTE`: At that time when the event loop is start then it execute in the clock wise which means that `check is executed before the timer.`
 
+        ![poll concept](./Images/libuv-eventloop3.png)
+
 
 
 <!-- write the code explaination for that event loop at the end of the `Full working path of the event loop ` -->
