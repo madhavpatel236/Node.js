@@ -62,11 +62,46 @@
         - (10) process.nextTick()
         - (11) promise callback
 
+        ```js
+
+        setimmediate(()=> console.log("setImmediate"));  
+        setTimeout(() -> console.log("Timer expired"), 0);  
+        Promise_resolve("promise").then(console.log);  
+        fs.readFile("./file.txt", "utf8", () => (  setTimeout(() => console.log("2nd timer"), 0);  
+        process-nextTick(() => console.logI"2nd nextTick"));  
+        setImmediate(()=> console.log("2nd setImmediate"));  
+        console.log("File reading CB");  D:  
+        process.nextrick(() => console,log("Porcess.nextTick"));  
+        console log("Last line of the file,");  
+
+        
+
+        ```
+
         ### Importent Concept of poll
         - When the `event loop is empty` and there are no more tasks to execute, it `enters the poll phase` and essentially waits for incoming events.
         - `NOTE`: At that time when the event loop is start then it execute in the clock wise which means that `check is executed before the timer.`
 
         ![poll concept](./Images/libuv-eventloop3.png)
+
+
+    ## (iii) Thread Pool: 
+    - Suppose we have to do a Task like a file system (fs) operations, DNS lookups (Domain Name System), or cryptographic methods then we need a multiple thread to do this tasks but callstack(V8) has a only single thread so they give this to the libuv which is do this type of Async Task.
+    - In the Thread pool we have a basically 4 thread which we can use as our needs but if we nned to change the number of the thread then we change them by using the `process.env.UV_THREADPOOL_SIZE = `
+
+    - #### How Thread pool works?:
+        -  suppose we have one file read task and one password encrypt (crypto) task parellal then libuv give this task to the thread pool and thread pool give them a saperate thread to do their work.
+        - now as soon as complete the task that given thread free and threadpool give this callback to the callback queue and event loop work after that.
+        - NOTE: `API calls cannnot need the Thread` which means that API call cannot use the threadpool.
+
+
+
+    - For the more deep understanding refer the pdf 9 & 10.
+
+- # JavaScript is single-threaded or multi-threaded? 
+- This question has no single answer it is a based on the condition like,
+    - if we have a code which is fully Sync then javascript is a single threaded because main thread(V8 or call stack) is a single threaded.
+    - but if we have a mixed code with the Sync and Async task and in the Async thask we have do perticular tasks like file system (fs) operations, DNS lookups (Domain Name System), or cryptographic methods then javascript work as a multi-threaded launguage because we use the libuv and in the libuv we use the Thread pool which has contain multiple threads.
 
 
 
