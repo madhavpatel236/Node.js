@@ -1,19 +1,33 @@
- const express = require("express")
- const app = express();
+const express = require("express")
+const connectDB = require("./config/database")
+const app = express();
+const User = require('./models/user')
+
+app.post("/signup", async (req,res) => {
+  const userObj = {
+    firstName: "Madhav",
+    lastName: "Karavadiya",
+    emailID: "madhav@karavadiya.com",
+    password: "madhav@123"
+  }
+
+  // creating a new instance of the User model
+  const user = new User(userObj) 
+
+  await user.save()
+})
 
 
- app.use('/madhav', (req,res) => {
-   res.send("Madhav")
- });
 
- app.use("/karavadiya", (req,res) => {
-   res.send("Karavadiya")
- });
-
- app.use("/", (req,res) => {
-   res.send("Hello from server!")
- });
-
- app.listen(1818, () => {
+connectDB()
+.then(()=>{
+  console.log("Database connection established... ")
+  app.listen(1818, () => {
     console.log('server is succesfully made at port 1818')
- })
+  })
+})
+.catch((err) => {
+  console.log("Some err occure when database connection establish.")
+})
+
+
