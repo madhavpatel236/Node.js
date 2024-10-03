@@ -1,8 +1,0 @@
-user name : NAMASTENODEJS
-user password: SJzF8mUV5wgcjCGa
-project Name: learning project
-cluster Name : Cluster0
-
-compass: Compass0
-Database Name : HelloWorld
-Collection Name: Collection0
