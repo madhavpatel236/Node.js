@@ -1,10 +1,8 @@
-// here we make a Schema which is a structure which is follow for save the data in the database.
-
-
+// here we make a Model in which we have a Schema. Schema is nothing but the Structure which we need to follow to save the data in the database.
 
 const mongoose = require("mongoose")
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     
     firstName:{
         type: String
@@ -31,5 +29,5 @@ const userSchema = mongoose.Schema({
     }
 })
 
-const userModel = mongoose.model("User", userSchema)
+const userModel = mongoose.model("User", userSchema) // Here "User" is a MOdel name and "userSchema" is a Schema which we need to follow.
 module.exports = userModel;

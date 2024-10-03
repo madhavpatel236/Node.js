@@ -1,4 +1,4 @@
-// In this file we can connect our database cluster.
+// In this file we can connect our cluster and make a database for the project.
 
 const mongoose = require("mongoose")
 

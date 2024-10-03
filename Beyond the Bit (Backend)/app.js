@@ -5,15 +5,14 @@ const User = require('./models/user')
 
 app.post("/signup", async (req,res) => {
   const userObj = {
-    firstName: "Madhav",
+    firstName: "Parth",
     lastName: "Karavadiya",
-    emailID: "madhav@karavadiya.com",
-    password: "madhav@123"
+    emailID: "parth@karavadiya.com",
+    password: "partht@123"
   }
 
   // creating a new instance of the User model
-  const user = new User(userObj) 
-
+  const user = new User(userObj) // Here 'User' is come form the model folder in which we have a user.js and in whcich we have a model User.
   await user.save()
 })
 
