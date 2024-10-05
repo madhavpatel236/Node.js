@@ -3,6 +3,7 @@ const connectDB = require("./config/database")
 const User = require('./models/user')
 const { signupValidator } = require("./utils/validator")
 const bcrypt = require('bcrypt');
+const validator = require("validator")
 const app = express();
 
 // convert the incoming data from the JSON which is coming from the database to the Javascript Object.
@@ -20,7 +21,7 @@ app.post("/signup", async (req, res) => {
 
     // password hash
     const HashPasswordValue = await bcrypt.hash(password, 10) // bcrypt is a library from which we can encrypt our password directly.
-    
+
     // creating a new instance of the User model
     const user = new User(
       {
@@ -28,7 +29,7 @@ app.post("/signup", async (req, res) => {
         lastName,
         emailID,
         gender,
-        password : HashPasswordValue
+        password: HashPasswordValue
       }
     ) // Here 'User' is come form the model folder in which we have a user.js and in whcich we have a model User.
 
@@ -40,6 +41,30 @@ app.post("/signup", async (req, res) => {
     res.status(400).send("Error: " + err.message)
   }
 })
+
+// login cranditial check API
+app.post("/login", async (req, res) => {
+
+  const { emailID, password } = req.body;
+
+  try {
+    // check email is present in the DB or not
+    const presentUser = await User.findOne({ emailID: emailID })
+    if (!presentUser) {
+      throw new Error("please enter valid email address!!")
+    }
+    // check the password
+    const isPasswordValid = await bcrypt.compare(password, presentUser.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid password")
+    } else {
+      res.send("password Checked")
+    }
+  } catch (err) {
+    res.status(400).send("ERROR: " + err.message)
+  }
+})
+
 
 // get the perticuler user details
 app.get("/user", async (req, res) => {
@@ -61,7 +86,7 @@ app.get("/user", async (req, res) => {
 // get the all user details
 app.get("/feed", async (req, res) => {
   try {
-    const userData = await User.find() // for fetch/get the all data we cannot give any arguments in the find()
+    const userData = await User.find() // for fetch orget the all data we cannot give any arguments in the find()
     if (!userData) {
       res.status(400).send("Data not found")
     } else {
