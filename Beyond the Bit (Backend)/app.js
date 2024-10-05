@@ -1,22 +1,43 @@
 const express = require("express")
 const connectDB = require("./config/database")
-const app = express();
 const User = require('./models/user')
+const { signupValidator } = require("./utils/validator")
+const bcrypt = require('bcrypt');
+const app = express();
 
 // convert the incoming data from the JSON which is coming from the database to the Javascript Object.
 app.use(express.json())
 
 // send the user details in the database
 app.post("/signup", async (req, res) => {
-  const userObj = req.body
+
   try {
+    const { firstName, lastName, emailID, password, gender } = req.body
+
+
+    // validate the detail cradentiales
+    signupValidator(req);
+
+    // password hash
+    const HashPasswordValue = await bcrypt.hash(password, 10) // bcrypt is a library from which we can encrypt our password directly.
+    
     // creating a new instance of the User model
-    const user = new User(userObj) // Here 'User' is come form the model folder in which we have a user.js and in whcich we have a model User.
+    const user = new User(
+      {
+        firstName,
+        lastName,
+        emailID,
+        gender,
+        password : HashPasswordValue
+      }
+    ) // Here 'User' is come form the model folder in which we have a user.js and in whcich we have a model User.
+
+
     await user.save()
-    console.log("Saved the user data successfully!! ")
+    res.send("Saved the user data successfully!! ")
   }
   catch (err) {
-    res.status(400).send("Error occures" + err.message)
+    res.status(400).send("Error: " + err.message)
   }
 })
 
@@ -69,7 +90,7 @@ app.delete("/user", async (req, res) => {
 
 // update the user Details
 app.patch("/user/:userId", async (req, res) => {
-  
+
   const userID = req.params?.userId
   const data = req.body
   // console.log(data)
@@ -85,12 +106,12 @@ app.patch("/user/:userId", async (req, res) => {
 
   try {
     // Here we do a API lavel validation like How much access we need to give to the user for edit the information 
-    const ALLOWED_UPDATES = ["age", "skills", "about"] 
+    const ALLOWED_UPDATES = ["age", "skills", "about"]
     const updateIsAllowed = Object.keys(data).every((key) => ALLOWED_UPDATES.includes(key)) // here we check that user edit data is allowed or not.
-    if(!updateIsAllowed){ // if edit data is not allowed then we send the invalide input otherwise move forverd.
+    if (!updateIsAllowed) { // if edit data is not allowed then we send the invalide input otherwise move forverd.
       res.status(400).send("Invalide input")
     }
-    if(data?.skills?.length > 50){
+    if (data?.skills?.length > 50) {
       throw new Error("skill length increase")
     }
 
