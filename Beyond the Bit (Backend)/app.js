@@ -4,10 +4,16 @@ const User = require('./models/user')
 const { signupValidator } = require("./utils/validator")
 const bcrypt = require('bcrypt');
 const validator = require("validator")
+const cookieParser = require('cookie-parser') 
+const jwt = require('jsonwebtoken')
+
 const app = express();
+
 
 // convert the incoming data from the JSON which is coming from the database to the Javascript Object.
 app.use(express.json())
+// The primary function of cookie-parser is to automatically parse incoming cookies from HTTP requests. This means you don't have to manually extract and decode cookie data from the request headers.
+app.use(cookieParser()) 
 
 // send the user details in the database
 app.post("/signup", async (req, res) => {
@@ -55,14 +61,30 @@ app.post("/login", async (req, res) => {
     }
     // check the password
     const isPasswordValid = await bcrypt.compare(password, presentUser.password);
-    if (!isPasswordValid) {
-      throw new Error("Invalid password")
-    } else {
+    if (isPasswordValid) {
+
+      // create a JWT tocken
+      const token = jwt.sign({_id : presentUser._id}, "Madhav@123" ) // _id = paylode or secreat info   Madhav@123 = private key
+      // console.log(token)
+
+      // add a token to cookies and send the response back to the user from the server.
+      res.cookie("token", "token") // it is a expressjs property.
       res.send("password Checked")
+
+    } else {
+      throw new Error("Invalid password")
     }
   } catch (err) {
     res.status(400).send("ERROR: " + err.message)
   }
+})
+
+app.get('/profile', (req,res) =>{
+
+  const cookies = req.cookies;
+  const {token}  = cookies ;
+  console.log(cookies)
+  res.send("reading cookies!!!!")
 })
 
 
