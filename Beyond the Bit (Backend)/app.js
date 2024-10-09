@@ -4,23 +4,23 @@ const User = require('./models/user')
 const { signupValidator } = require("./utils/validator")
 const bcrypt = require('bcrypt');
 const validator = require("validator")
-const cookieParser = require('cookie-parser') 
+const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
+const { userAuth } = require('./middlewares/auth')
 
 const app = express();
 
 
 // convert the incoming data from the JSON which is coming from the database to the Javascript Object.
-app.use(express.json())
+app.use(express.json());
 // The primary function of cookie-parser is to automatically parse incoming cookies from HTTP requests. This means you don't have to manually extract and decode cookie data from the request headers.
-app.use(cookieParser()) 
+app.use(cookieParser());
 
 // send the user details in the database
 app.post("/signup", async (req, res) => {
 
   try {
     const { firstName, lastName, emailID, password, gender } = req.body
-
 
     // validate the detail cradentiales
     signupValidator(req);
@@ -64,11 +64,11 @@ app.post("/login", async (req, res) => {
     if (isPasswordValid) {
 
       // create a JWT tocken
-      const token = jwt.sign({_id : presentUser._id}, "Madhav@123" ) // _id = paylode or secreat info   Madhav@123 = private key
-      // console.log(token)
+      const token = jwt.sign({ _id: presentUser._id }, "Madhav@123") // _id = paylode or secreat info   Madhav@123 = private key
+      console.log(token)
 
       // add a token to cookies and send the response back to the user from the server.
-      res.cookie("token", "token") // it is a expressjs property.
+      res.cookie("token", token) // it is a expressjs property.
       res.send("password Checked")
 
     } else {
@@ -79,12 +79,22 @@ app.post("/login", async (req, res) => {
   }
 })
 
-app.get('/profile', (req,res) =>{
+app.get('/profile', userAuth , async (req, res) => {
 
-  const cookies = req.cookies;
-  const {token}  = cookies ;
-  console.log(cookies)
-  res.send("reading cookies!!!!")
+  try {
+    // const cookies = req.cookies;
+    // const { token } = cookies;
+    // if (!token) {
+    //   throw new Error("please login again!!!")
+    // }
+
+    // // validate my token.
+    // const decodeedMessage = await jwt.verify(token, "Madhav@123"); // here Madhav@123 is a special key for check the token.
+
+    res.send("reading cookies!!!!")
+  } catch (err) {
+    throw new Error("something went Wrong!!!!" + err.message)
+  }
 })
 
 
@@ -94,6 +104,7 @@ app.get("/user", async (req, res) => {
   console.log(userEmail)
   try {
     const userFind = await User.findOne({ emailID: userEmail })
+    
     if (!userFind) {
       res.status(404).send("User not found!!")
     } else {
