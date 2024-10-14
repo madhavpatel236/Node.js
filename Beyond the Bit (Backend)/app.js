@@ -65,7 +65,7 @@ app.post("/login", async (req, res) => {
 
       // create a JWT tocken
       const token = jwt.sign({ _id: presentUser._id }, "Madhav@123") // _id = paylode or secreat info   Madhav@123 = private key
-      console.log(token)
+      // console.log(token)
 
       // add a token to cookies and send the response back to the user from the server.
       res.cookie("token", token) // it is a expressjs property.
@@ -126,7 +126,7 @@ app.get("/feed", async (req, res) => {
       res.send(userData)
     }
   } catch (err) {
-    console.log('Some error occures ', err.message)
+    throw new Error('Some error occures ', err.message)
   }
 })
 

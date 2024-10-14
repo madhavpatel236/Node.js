@@ -18,7 +18,7 @@ const userAuth = async (req, res, next) => {
         const { _id } = decodeMessage
 
         const user = User.findById(_id)
-        console.log(user)
+        // console.log(user)
         if (!user) {
             throw new Error("User is not valid!!!!!")
         }
