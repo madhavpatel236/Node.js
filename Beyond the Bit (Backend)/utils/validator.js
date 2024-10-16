@@ -20,12 +20,25 @@ const signupValidator = (req) => {
     else if (gender && !["male", "female", "others"].includes(gender)) {
         throw new Error("please select from a male, female or others gender categories only")
     }
+}
 
+const validateEditProfileData = (req) => {
+    const allowedEditFields = [
+        "firstName",
+        "lastName",
+        "age",
+        "gender",
+        "skills",
+        "about",
+        "photoURL"
+    ] 
 
-
+    const isEditAllowed = Object.keys(req.body).every((field) => allowedEditFields.includes(field))
+    return isEditAllowed;
 
 }
 
 module.exports = {
-    signupValidator
+    signupValidator,
+    validateEditProfileData
 }

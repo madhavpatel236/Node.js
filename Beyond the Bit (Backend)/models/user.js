@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
       trim: true,
+      unique: true, // with the help of the 'unique' property index was automatically made behind the seen so we don't need to use the 'index' property. 
       validate(value) {
         if (!validator.isEmail(value)) {
           throw new Error("Invalid Email");
