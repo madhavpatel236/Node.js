@@ -48,7 +48,7 @@ authRouter.post("/login", async (req, res) => {
 
       // add a token to cookies and send the response back to the user from the server.
       res.cookie("token", token); // it is a expressjs property.
-      res.send("password Checked");
+      res.send(presentUser);
     } else {
       throw new Error("Invalid password");
     }
