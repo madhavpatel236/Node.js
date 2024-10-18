@@ -1,10 +1,6 @@
 const express = require("express");
 const connectDB = require("./config/database");
-const User = require("./models/user");
-const validator = require("validator");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-const { userAuth } = require("./middlewares/auth");
 
 const app = express();
 
@@ -16,11 +12,12 @@ app.use(cookieParser());
 const authRoute = require('./routers/auth')
 const profileRoute = require('./routers/profile')
 const requestRoute = require('./routers/request')
-// const authRoute = require('./routers/auth')
+const userRouter = require('./routers/user')
 
 app.use("/", authRoute)
 app.use("/", profileRoute)
 app.use("/", requestRoute)
+app.use("/", userRouter)
 
 
 
@@ -35,6 +32,8 @@ connectDB()
   .catch((err) => {
     console.log("Some err occure when database connection establish.");
   });
+
+  
 
 // // get the perticuler user details
 // app.get("/user", async (req, res) => {

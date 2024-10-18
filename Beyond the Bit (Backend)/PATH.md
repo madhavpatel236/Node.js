@@ -339,6 +339,7 @@
   - ### Step:2 Make a API
     - For make the API we understand the API Work. This API is for the Home page Schrolling so suppose i use the app and at the home page i get a some users profile, so i can 'interested' in this profile or may be 'ignored' the profile, this two senario was possible.
     - Now for make the API we need a 3 things fromUserId, toUserId and status.
+
     - For this API first we need to check that user is login or not for that we use the middleware `userAuth` which is present at the ./middleware/auth
     - From that we was check that user is present in the cookies or not if user present then we permit this API otherwise we can't give the permission to use.
     -  So our first value fromUserId is also retrive from the req.send which is come from the userAuth.
@@ -394,3 +395,10 @@
       ConnectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });    
     ```
     - Here 1 means Assending order and -1 is Desending order.
+
+  - ### Learnings:
+    - Dynamic Routing
+    - DB Queries
+    - enum DB schema property
+    - Index
+    - Compound Index 

@@ -64,4 +64,47 @@ requestRouter.post(
   }
 );
 
+// Accept and reject the request API
+requestRouter.post(
+  "/request/review/:status/:requestId",
+  userAuth,
+  async (req, res) => {
+    // status only accept or reject
+    // only change the status by the auth user
+
+    try {
+      const statusAllowed = ["accept", "reject"];
+
+      const loggedInUser = req.user;
+      const requestId = req.params.requestId;
+      const status = req.params.status;
+
+      if (!statusAllowed) {
+        res.status(400).send("Status is invalid!!!!");
+      }
+
+      const conncetionRequest = await ConnectionRequest.findOne({
+        _id: requestId, // Check the param request id to the database request saved reqest id.
+        toUserId: loggedInUser._id, // check that only user that recive the request that show the options.
+        status: "interested", // if other person send the req means interested in profile then and then show the options.
+      });
+
+      if (!conncetionRequest) {
+        res.status(400).send({ message: "Connection request not found" });
+      }
+
+      conncetionRequest.status = status // we change the status in the DB as per the reciver status(Accept, reject)
+
+      const data = await conncetionRequest.save();
+      res.json({
+        message: `Connection request accepted by the ${loggedInUser.firstName}`,
+        data
+      })
+
+    } catch (err) {
+      res.status(400).send("ERROR: " + err.message);
+    }
+  }
+);
+
 module.exports = requestRouter;
