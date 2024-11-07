@@ -2,9 +2,8 @@
 
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema(
   {
@@ -23,7 +22,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
       trim: true,
-      unique: true, // with the help of the 'unique' property index was automatically made behind the seen so we don't need to use the 'index' property. 
+      unique: true, // with the help of the 'unique' property index was automatically made behind the seen so we don't need to use the 'index' property.
       validate(value) {
         if (!validator.isEmail(value)) {
           throw new Error("Invalid Email");
@@ -82,7 +81,7 @@ const userSchema = new mongoose.Schema(
 // here we directly add some functionality which is directly locked with the user model like make a token for the cookies or passwordValidator for the post /signin API.
 userSchema.methods.PasswordValidator = async function (passwordEnteredByUser) {
   const currentUser = this;
-  const passwordHash = currentUser.password 
+  const passwordHash = currentUser.password;
 
   const checker = await bcrypt.compare(passwordEnteredByUser, passwordHash);
 
