@@ -7,10 +7,10 @@ const profileRoute = express.Router();
 
 profileRoute.get("/profile/view", userAuth, async (req, res) => {
   try {
-    userInfo = req.user
+    userInfo = req.user;
     res.send(userInfo);
   } catch (err) {
-    res.send("something went Wrong!!!!" + err.message);
+    res.status(400).send("ERROR : " + err.message);
   }
 });
 
@@ -23,7 +23,7 @@ profileRoute.patch("/profile/edit", userAuth, async (req, res) => {
 
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
 
-    await loggedInUser.save()
+    await loggedInUser.save();
 
     res.json({
       message: `${loggedInUser.firstName} your data is upadate now!!!!`,

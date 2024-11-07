@@ -10,7 +10,7 @@ authRouter.post("/signup", async (req, res) => {
     const { firstName, lastName, emailID, password, gender } = req.body;
 
     // validate the detail cradentiales
-    signupValidator(req);
+    signupValidatoralidator(req);
 
     // password hash
     const HashPasswordValue = await bcrypt.hash(password, 10); // bcrypt is a library from which we can encrypt our password directly.
@@ -57,11 +57,11 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-authRouter.post("/logout", async (req, res) => {
+authRouter.post("/logout", (req, res) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
   });
-  res.send("logout Successful!!");
+  res.send("Logout Successful!!");
 });
 
 module.exports = authRouter;
