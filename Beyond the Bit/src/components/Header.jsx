@@ -30,12 +30,15 @@ function Header() {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <Link to='/' className="btn btn-ghost text-xl">Beyond the Bit</Link>
+        <Link to="/" className="btn btn-ghost text-xl">
+          Beyond the Bit
+        </Link>
       </div>
 
       {user && (
         <div className="flex-none">
-          <p> {user.firstName} </p>
+          <Link to='/requests' className="mx-2 text-lg font-bold"> Requests </Link>
+          {/* <p> {user.firstName} </p> */}
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -92,7 +95,7 @@ function Header() {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to='profile' className="justify-between">
+                <Link to="profile" className="justify-between">
                   Profile
                   <span className="badge">New</span>
                 </Link>

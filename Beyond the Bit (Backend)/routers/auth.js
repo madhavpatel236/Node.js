@@ -1,5 +1,5 @@
 const express = require("express");
-const { signupValidator } = require("../");
+const { signupValidator } = require("../utils/validator");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
@@ -10,7 +10,7 @@ authRouter.post("/signup", async (req, res) => {
     const { firstName, lastName, emailID, password, gender } = req.body;
 
     // validate the detail cradentiales
-    signupValidatoralidator(req);
+    signupValidator(req);
 
     // password hash
     const HashPasswordValue = await bcrypt.hash(password, 10); // bcrypt is a library from which we can encrypt our password directly.
