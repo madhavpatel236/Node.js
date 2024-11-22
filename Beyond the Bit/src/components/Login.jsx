@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../store/userSlice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constance";
+import Signup from "./Signup";
 
 function Login() {
   const [emailID, setEmailID] = useState("madhav@gmail.com");
@@ -32,7 +33,7 @@ function Login() {
 
   return (
     <div className="flex h-screen justify-center items-center ">
-      <div className="card text-primary-content w-96 mb-16 bg-secondary flex justify-center align-middle ">
+      <div className="card text-primary-content w-96 mb-16 bg-primary flex justify-center align-middle ">
         <div className="card-body  ">
           <h2 className="card-title flex justify-center text-2xl text-white">
             Login
@@ -68,10 +69,12 @@ function Login() {
           </div>
 
           <div className="card-actions justify-center mt-5">
-            <button className="btn px-5 text-white" onClick={handleLogin}>
+            <button className="btn px-5 text-white hover:text-base transition hover:-translate-y-2" onClick={handleLogin}>
               Login
             </button>
           </div>
+
+          <Link to='/signup' className="flex justify-center mt-3 transition hover:translate-y-2 ease-in-out hover:underline text-black font-serif text-lg font-bold  "> Don't have an account sign up</Link>
         </div>
       </div>
     </div>

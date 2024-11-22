@@ -1,15 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="footer footer-center bottom-0 bg-base-300 text-base-content rounded p-10 flex-col justify-end ">
+    <footer className="footer footer-center flex bottom-0 bg-base-300 text-base-content rounded p-10 flex-col justify-end ">
       <nav className="grid grid-flow-col gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
+        <Link to='https://github.com/madhavpatel236'  className="link link-hover">GitHub</Link>
+        <Link to='https://www.linkedin.com/in/madhav-karavadiya/' className="link link-hover">Linkedin</Link>
+        <Link to='https://drive.google.com/file/d/1Z6OdMadVKBxBKzgHQgK-XLevEkNbYHGs/view?usp=drive_link' className="link link-hover">Resume</Link>
+        <Link to='https://drive.google.com/drive/folders/1qj9WdwqZDIfyUn4OxDcyHkqQ-Gh4NoRF?usp=drive_link' className="link link-hover">Certificates</Link>
       </nav>
-      <nav>
+      {/* <nav>
         <div className="grid grid-flow-col gap-4">
           <a>
             <svg
@@ -45,11 +46,10 @@ function Footer() {
             </svg>
           </a>
         </div>
-      </nav>
+      </nav> */}
       <aside>
         <p>
-          Copyright © {new Date().getFullYear()} - All right reserved by ACME
-          Industries Ltd
+          Copyright © {new Date().getFullYear()} - By Madhav Karavadiya
         </p>
       </aside>
     </footer>

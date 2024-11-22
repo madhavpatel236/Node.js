@@ -7,7 +7,7 @@ const authRouter = express.Router();
 
 authRouter.post("/signup", async (req, res) => {
   try {
-    const { firstName, lastName, emailID, password, gender } = req.body;
+    const { firstName, lastName, emailID, password, gender,photoURL } = req.body;
 
     // validate the detail cradentiales
     signupValidator(req);
@@ -22,6 +22,7 @@ authRouter.post("/signup", async (req, res) => {
       emailID,
       gender,
       password: HashPasswordValue,
+      photoURL
     }); // Here 'User' is come form the model folder in which we have a user.js and in whcich we have a model User.
 
     await user.save();

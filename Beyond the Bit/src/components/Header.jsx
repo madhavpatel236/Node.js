@@ -39,7 +39,7 @@ function Header() {
         <div className="flex-none">
           <Link to='/requests' className="mx-2 text-lg font-bold"> Requests </Link>
           {/* <p> {user.firstName} </p> */}
-          <div className="dropdown dropdown-end">
+          {/* <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -77,7 +77,7 @@ function Header() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
