@@ -7,6 +7,7 @@ import appStore from './store/appStore.js'
 import Profile from "./components/Profile.jsx";
 import Requests from "./components/Requests.jsx";
 import Signup from "./components/Signup.jsx";
+import PersonProfile from "./components/PersonProfile.jsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/personProfile" element={< PersonProfile /> } />
           </Route>
         </Routes>
       </BrowserRouter>
